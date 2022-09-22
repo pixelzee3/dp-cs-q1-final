@@ -37,6 +37,7 @@ class Bike:
         self.trip_average_speed: float = None
         self.trip_end_energy: Energy = None
         
+        # Idea for the two additional user datas: odometer & something else
 
     def setup_device(self):
         pass
