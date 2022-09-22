@@ -43,28 +43,54 @@ class SmartBike:
         # Idea for the two additional user datas: odometer & something else
 
     def set_device_up(self):
-        # TODO: do type checking here
         print("\nCongratulations on your new smart bike!\nPlease fill out the following information below to configure your bike: \n")
 
         self.user_name = input("Name: ")
 
-        self.user_weight = input("Weight (kg): ")
+        while True:
+            try:
+                self.user_weight = float(input("Weight (kg): "))
+            except ValueError:
+                print("\nPlease use decimal format\ne.g., 69 or 42.0\n")
+                continue
+            break
 
-        self.user_height = input("Height (cm): ")
+        while True:
+            try:
+                self.user_height = float(input("Height (cm): "))
+            except ValueError:
+                print("\nPlease use decimal format\ne.g., 69 or 42.0\n")
+                continue
+            break
 
-        print("""
+        while True:
+            print("""
         1 -> Beginner (< 10 km trips, < 10 km/h avg. speed)
         2 -> Intermediate (< 30 km trips, < 20 km/h avg. speed)
-        3 - > Experienced (30+ km/h trips, 30+ km/h avg. speed)
+        3 -> Experienced (30+ km/h trips, 30+ km/h avg. speed)
         """)
-        self.user_experience = int(input("Experience: "))
+            try:
+                self.user_experience = Experience(int(input("Experience: ")))
+            except ValueError:
+                print(
+                    "\nPlease input the number that corresponds to the choice you'd like to select")
+                continue
+            break
 
-        print("""
+        while True:
+            print("""
         1 -> Weekends
         2 -> Weekdays
-        3 - > Everyday
+        3 -> Everyday
         """)
-        self.user_cycle_frequency = input("Cycling days: ")
+            try:
+                self.user_cycle_frequency = CycleFrequency(
+                    int(input("Cycling days: ")))
+            except ValueError:
+                print(
+                    "\nPlease input the number that corresponds to the choice you'd like to select")
+                continue
+            break
 
 
 # Run the program (only when explicitly called)
