@@ -26,7 +26,7 @@ class Energy(Enum):
 
 class SmartBike:
     def __init__(self):
-        # Base information
+        # Base user information
         self.user_name: str = None
         self.user_weight: float = None
         self.user_age: int = None
