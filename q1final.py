@@ -3,6 +3,7 @@
 # Device personality: Informative
 
 from enum import Enum
+import asyncio
 
 
 class Experience(Enum):
@@ -22,6 +23,19 @@ class Energy(Enum):
     TIRED = 2
     NORMAL = 3
     ENERGETIC = 4
+
+
+class Utils:
+    @staticmethod
+    def insert_new_line(amount=1):
+        for _ in range(amount):
+            print()
+
+    @staticmethod
+    async def progress_dots(amount=3, interval=1):
+        for _ in range(amount):
+            await asyncio.sleep(interval)
+            print('.')
 
 
 class SmartBike:
@@ -119,8 +133,44 @@ class SmartBike:
                 continue
             break
 
+    async def trip(self):
+        print("Let's begin a trip!\n")
+
+        self.trip_destination = input("Where are you starting from?: ").strip()
+        self.trip_destination = input("Where would you like to go?: ").strip()
+
+        print(f"Great! Let's begin a trip from {self.trip_starting_point} to {self.trip_destination}.\n")
+        await Utils.progress_dots()
+
+        print(f"\nYou have arrived at {self.trip_destination}!")
+
+        while True:
+            print("""
+        1 -> Exhausted
+        2 -> Tired
+        3 -> Normal
+        4 -> Energetic
+        """)
+            try:
+                self.trip_end_energy = Energy(
+                    int(input("How are your energy levels?: ")))
+            except ValueError:
+                print(
+                    "\nPlease input the number that corresponds to the choice you'd like to select")
+                continue
+            break
+        
+        while True:
+            try:
+                self.user_weight = float(input("What was your average speed in km/h?: "))
+            except ValueError:
+                print("\nPlease use decimal format\ne.g., 69 or 42.0\n")
+                continue
+            break
+
 
 # Run the program (only when explicitly called)
 if __name__ == "__main__":
     bike = SmartBike()
     bike.set_device_up()
+    asyncio.run(bike.trip())
