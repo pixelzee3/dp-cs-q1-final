@@ -1,6 +1,5 @@
 # Potential IOT device: Smart bike
 # Device description: In terms of hardware, the smart bike is able to electronically adjust the seat and handlebar heights. The bike is also has a display to display information and reminders and an electronic gear shifter. Besides that, the smart bike is able to analyze the user's cycling performance using a collection of data.
-# Device personality: Informative
 
 from enum import Enum
 import asyncio
@@ -58,33 +57,35 @@ class SmartBike:
         # Personal note from me: Accumulating the data into a list is redundant. I'm just doing this for the sake of meeting the success criteria.
 
     def set_device_up(self):
-        print("Congratulations on your new smart bike!\nPlease fill out the following information below to configure your bike: ")
+        print("G'day mate. Grats on the new smart bike!\nTell me a bit about yourself, will ya. I'll optimize myself before you giddy-up")
 
         # This input variable collects the user's name.
         # This information is relevant to the smart bike because it can use the name to create an online profile for the user. This profile may contain relevant information such as the user's experience or past cycles and can be used to connect with other users.
         # Aside from that, the name can also be displayed on the screen in case the bike is lost.
-        self.user_name = input("Name: ")
+        self.user_name = input("'Gotta name?: ")
 
         # This input variable collects the user's age.
         # This information is relevant to the company creating the smart bikes because they can figure out the product's audience and potentially support them better (e.g., if the mean age of the users were older, the company could push a software update that improves the experience for older people)
         while True:
             try:
-                self.user_age = int(input("Age (years): "))
+                self.user_age = int(input("How old are ya?: "))
             except ValueError:
-                print("Please use integer formate.g., 4 or 69")
+                print("Please use integer format e.g., 4 or 69")
                 continue
             if self.user_age <= 0:
                 print("Please enter a valid age")
                 continue
+            if self.user_age == 69:
+                print("Dang, nice age mate.")
             break
 
         # This input variable collects the user's weight.
         # This information is relevant to the smart bike because it can be used to intelligently adjust the seating and handlebar heights in accordance to how far the user's legs and arms can reach.
         while True:
             try:
-                self.user_height = float(input("Height (cm): "))
+                self.user_height = float(input("Ight. How tall are ya in centimeters now?: "))
             except ValueError:
-                print("Please use decimal formate.g., 69 or 42.0")
+                print("Please use decimal format e.g., 69 or 42.0")
                 continue
             break
 
@@ -92,9 +93,9 @@ class SmartBike:
         # This information is relevant to the smart bike because it can be used to intelligently adjust the seating and handlebar heights to their optimal position (body fat can add additional cushioning around the butt which affects the body position).
         while True:
             try:
-                self.user_weight = float(input("Weight (kg): "))
+                self.user_weight = float(input("How much do you weigh in kilos mate? (and, no, I won't judge): "))
             except ValueError:
-                print("Please use decimal formate.g., 69 or 42.0")
+                print("Please use decimal format e.g., 69 or 42.0")
                 continue
             break
 
@@ -110,7 +111,7 @@ class SmartBike:
         3 -> Experienced
         """)
             try:
-                self.user_experience = Experience(int(input("Experience: ")))
+                self.user_experience = Experience(int(input("How experienced are ya with this cycling thing?: ")))
             except ValueError:
                 print(
                     "Please input the number that corresponds to the choice you'd like to select")
@@ -127,7 +128,7 @@ class SmartBike:
         """)
             try:
                 self.user_cycle_frequency = CycleFrequency(
-                    int(input("Cycling days: ")))
+                    int(input("When would'ya pick something like me up?: ")))
             except ValueError:
                 print(
                     "Please input the number that corresponds to the choice you'd like to select")
@@ -136,7 +137,7 @@ class SmartBike:
 
         # Print data collected from this function
         print(f"""
-Great! Here's a review of your data:
+Ight, thanks for the info mate. Here's a review of it if you're feeling a little insecure:
 
     User name: {self.user_name}
     User weight: {self.user_weight} kg
@@ -147,19 +148,19 @@ Great! Here's a review of your data:
         """)
 
     async def trip(self):
-        print("Let's begin a trip!")
+        print("Enough sitting around. Let's begin a trip...")
 
         # These inputs are relevant to the smart bike because it can use this information to (optionally) record all the trips.
         # The trip data can then be reviewed by the user for reflection purposes. Additionally, the trip data can be published to their online profile.
         self.trip_starting_point = input(
-            "Where are you starting from?: ").strip()
-        self.trip_destination = input("Where would you like to go?: ").strip()
+            "Where'ya gonna start?: ").strip()
+        self.trip_destination = input("Cool. Where to now?: ").strip()
 
         print(
-            f"Great! Let's begin a trip from {self.trip_starting_point} to {self.trip_destination}.")
+            f"Got it. To {self.trip_destination} y'all!")
         await Utils.progress_dots()
 
-        print(f"You have arrived at {self.trip_destination}!")
+        print(f"We're here at good o'l {self.trip_destination}!")
 
         while True:
             print("""
@@ -170,7 +171,7 @@ Great! Here's a review of your data:
         """)
             try:
                 self.trip_end_energy = Energy(
-                    int(input("How are your energy levels?: ")))
+                    int(input("How tired are ya feeling?: ")))
             except ValueError:
                 print(
                     "Please input the number that corresponds to the choice you'd like to select")
@@ -180,14 +181,14 @@ Great! Here's a review of your data:
         while True:
             try:
                 self.trip_average_speed = float(
-                    input("What was your average speed in km/h?: "))
+                    input("How fast were'ya going on average (km/h)?: "))
             except ValueError:
-                print("Please use decimal formate.g., 69 or 42.0")
+                print("Please use decimal format e.g., 69 or 42.0")
                 continue
             break
 
         print(f"""
-Great! Here's a review of your data with your last trip information:
+Great! Here's ya data, now with that trip y'just did:
 
     User name: {self.user_name}
     User weight: {self.user_weight} kg
@@ -218,9 +219,9 @@ Great! Here's a review of your data with your last trip information:
         while True:
             try:
                 self.accumulated_data.append(float(
-                    input("How far was your trip in km? This will be added to your odometer: ")))
+                    input("One last thing, how far did ya go just now (in km)? This will be added to your odometer: ")))
             except ValueError:
-                print("Please use decimal formate.g., 69 or 42.0")
+                print("Please use decimal format e.g., 69 or 42.0")
                 continue
             break
 
@@ -234,7 +235,7 @@ Great! Here's a review of your data with your last trip information:
             answer = 1
             try:
                 answer = int(
-                    input("Would you like to delete your last trip information?: "))
+                    input("'Kay I got all the info now. Do you wanna delete your trip information for your insecurities?: "))
                 if answer < 1 or answer > 2:
                     raise ValueError
             except ValueError:
