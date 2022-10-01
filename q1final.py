@@ -54,7 +54,8 @@ class SmartBike:
         self.trip_average_speed: float = 0
         self.trip_end_energy: Energy = Energy.NORMAL
 
-        # ? Ideas for the two additional user data: odometer & removing last trip information
+        # Personal note from me: Accumulating the data into a list is redundant. I'm just doing this for the sake of meeting the success criteria.
+        self.accumulated_data = []
 
     def set_device_up(self):
         print("Congratulations on your new smart bike!\nPlease fill out the following information below to configure your bike: ")
@@ -147,7 +148,8 @@ Great! Here's a review of your data:
     async def trip(self):
         print("Let's begin a trip!")
 
-        self.trip_destination = input("Where are you starting from?: ").strip()
+        self.trip_starting_point = input(
+            "Where are you starting from?: ").strip()
         self.trip_destination = input("Where would you like to go?: ").strip()
 
         print(
@@ -174,11 +176,73 @@ Great! Here's a review of your data:
 
         while True:
             try:
-                self.user_weight = float(
+                self.trip_average_speed = float(
                     input("What was your average speed in km/h?: "))
             except ValueError:
                 print("Please use decimal formate.g., 69 or 42.0")
                 continue
+            break
+
+        print(f"""
+Great! Here's a review of your data with your last trip information:
+
+    User name: {self.user_name}
+    User weight: {self.user_weight} kg
+    User height: {self.user_height} cm
+    User age: {self.user_age} years
+    User experience: {'Beginner' if self.user_experience == Experience.BEGINNER else 'Intermediate' if self.user_experience == Experience.INTERMEDIATE else 'Experienced'}
+    User cycle frequency: {'Weekends' if self.user_cycle_frequency == CycleFrequency.WEEKEND else 'Weekdays' if self.user_cycle_frequency == CycleFrequency.WEEKDAY else 'Everyday'}
+    Last trip information:    
+        Starting point: {self.trip_starting_point}
+        Ending point: {self.trip_destination}
+        Average speed: {self.trip_average_speed} km/h
+        User energy level after trip: {'Exhausted' if self.trip_end_energy == Energy.EXHAUSTED else 'Tired' if self.trip_end_energy == Energy.TIRED else 'Normal' if self.trip_end_energy == Energy.NORMAL else 'Energetic'}
+        """)
+
+        self.accumulated_data = [
+            self.user_name,
+            self.user_weight,
+            self.user_age,
+            self.user_height,
+            self.user_experience,
+            self.user_cycle_frequency,
+            self.trip_starting_point,
+            self.trip_destination,
+            self.trip_average_speed,
+            self.trip_end_energy
+        ]
+
+        while True:
+            try:
+                self.accumulated_data.append(float(
+                    input("How far was your trip in km? This will be added to your odometer: ")))
+            except ValueError:
+                print("Please use decimal formate.g., 69 or 42.0")
+                continue
+            break
+
+        while True:
+
+            print("""
+        1 -> Yes
+        2 -> No
+        """)
+
+            answer = 1
+            try:
+                answer = int(
+                    input("Would you like to delete your last trip information?: "))
+                if answer < 1 or answer > 2:
+                    raise ValueError
+            except ValueError:
+                print(
+                    "Please input the number that corresponds to the choice you'd like to select")
+                continue
+            if answer == 1:
+                self.accumulated_data.remove(self.trip_average_speed)
+                self.accumulated_data.remove(self.trip_destination)
+                self.accumulated_data.remove(self.trip_starting_point)
+                self.accumulated_data.remove(self.trip_end_energy)
             break
 
 
@@ -188,3 +252,4 @@ if __name__ == "__main__":
     bike = SmartBike()
     bike.set_device_up()
     asyncio.run(bike.trip())
+    print(bike.accumulated_data)
