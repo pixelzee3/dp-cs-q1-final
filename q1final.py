@@ -54,8 +54,8 @@ class SmartBike:
         self.trip_average_speed: float = 0
         self.trip_end_energy: Energy = Energy.NORMAL
 
-        # Personal note from me: Accumulating the data into a list is redundant. I'm just doing this for the sake of meeting the success criteria.
         self.accumulated_data = []
+        # Personal note from me: Accumulating the data into a list is redundant. I'm just doing this for the sake of meeting the success criteria.
 
     def set_device_up(self):
         print("Congratulations on your new smart bike!\nPlease fill out the following information below to configure your bike: ")
@@ -134,6 +134,7 @@ class SmartBike:
                 continue
             break
 
+        # Print data collected from this function
         print(f"""
 Great! Here's a review of your data:
 
@@ -148,6 +149,8 @@ Great! Here's a review of your data:
     async def trip(self):
         print("Let's begin a trip!")
 
+        # These inputs are relevant to the smart bike because it can use this information to (optionally) record all the trips.
+        # The trip data can then be reviewed by the user for reflection purposes. Additionally, the trip data can be published to their online profile.
         self.trip_starting_point = input(
             "Where are you starting from?: ").strip()
         self.trip_destination = input("Where would you like to go?: ").strip()
