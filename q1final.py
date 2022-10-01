@@ -26,19 +26,19 @@ class Energy(Enum):
 
 class SmartBike:
     def __init__(self):
-        # Base user information
-        self.user_name: str = None
-        self.user_weight: float = None
-        self.user_age: int = None
-        self.user_height: float = None
-        self.user_experience: Experience = None
-        self.user_cycle_frequency: CycleFrequency = None
+        # Base user information (with default values)
+        self.user_name: str = ''
+        self.user_weight: float = 0.0
+        self.user_age: int = 0
+        self.user_height: float = 0
+        self.user_experience: Experience = Experience.BEGINNER
+        self.user_cycle_frequency: CycleFrequency = CycleFrequency.EVERYDAY
 
-        # Trip information
-        self.trip_starting_point: str = None
-        self.trip_destination: str = None
-        self.trip_average_speed: float = None
-        self.trip_end_energy: Energy = None
+        # Trip information (with default values)
+        self.trip_starting_point: str = ''
+        self.trip_destination: str = ''
+        self.trip_average_speed: float = 0
+        self.trip_end_energy: Energy = Energy.NORMAL
 
         # ? Ideas for the two additional user data: odometer & something else
 
