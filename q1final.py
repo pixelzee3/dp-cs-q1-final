@@ -54,10 +54,10 @@ class SmartBike:
         self.trip_average_speed: float = 0
         self.trip_end_energy: Energy = Energy.NORMAL
 
-        # ? Ideas for the two additional user data: odometer & something else
+        # ? Ideas for the two additional user data: odometer & removing last trip information
 
     def set_device_up(self):
-        print("\nCongratulations on your new smart bike!\nPlease fill out the following information below to configure your bike: \n")
+        print("Congratulations on your new smart bike!\nPlease fill out the following information below to configure your bike: ")
 
         # This input variable collects the user's name.
         # This information is relevant to the smart bike because it can use the name to create an online profile for the user. This profile may contain relevant information such as the user's experience or past cycles and can be used to connect with other users.
@@ -70,10 +70,10 @@ class SmartBike:
             try:
                 self.user_age = int(input("Age (years): "))
             except ValueError:
-                print("\nPlease use integer format\ne.g., 4 or 69\n")
+                print("Please use integer formate.g., 4 or 69")
                 continue
             if self.user_age <= 0:
-                print("\nPlease enter a valid age\n")
+                print("Please enter a valid age")
                 continue
             break
 
@@ -83,7 +83,7 @@ class SmartBike:
             try:
                 self.user_height = float(input("Height (cm): "))
             except ValueError:
-                print("\nPlease use decimal format\ne.g., 69 or 42.0\n")
+                print("Please use decimal formate.g., 69 or 42.0")
                 continue
             break
 
@@ -93,7 +93,7 @@ class SmartBike:
             try:
                 self.user_weight = float(input("Weight (kg): "))
             except ValueError:
-                print("\nPlease use decimal format\ne.g., 69 or 42.0\n")
+                print("Please use decimal formate.g., 69 or 42.0")
                 continue
             break
 
@@ -112,7 +112,7 @@ class SmartBike:
                 self.user_experience = Experience(int(input("Experience: ")))
             except ValueError:
                 print(
-                    "\nPlease input the number that corresponds to the choice you'd like to select")
+                    "Please input the number that corresponds to the choice you'd like to select")
                 continue
             break
 
@@ -129,20 +129,32 @@ class SmartBike:
                     int(input("Cycling days: ")))
             except ValueError:
                 print(
-                    "\nPlease input the number that corresponds to the choice you'd like to select")
+                    "Please input the number that corresponds to the choice you'd like to select")
                 continue
             break
 
+        print(f"""
+Great! Here's a review of your data:
+
+    User name: {self.user_name}
+    User weight: {self.user_weight} kg
+    User height: {self.user_height} cm
+    User age: {self.user_age} years
+    User experience: {'Beginner' if self.user_experience == Experience.BEGINNER else 'Intermediate' if self.user_experience == Experience.INTERMEDIATE else 'Experienced'}
+    User cycle frequency: {'Weekends' if self.user_cycle_frequency == CycleFrequency.WEEKEND else 'Weekdays' if self.user_cycle_frequency == CycleFrequency.WEEKDAY else 'Everyday'}
+        """)
+
     async def trip(self):
-        print("Let's begin a trip!\n")
+        print("Let's begin a trip!")
 
         self.trip_destination = input("Where are you starting from?: ").strip()
         self.trip_destination = input("Where would you like to go?: ").strip()
 
-        print(f"Great! Let's begin a trip from {self.trip_starting_point} to {self.trip_destination}.\n")
+        print(
+            f"Great! Let's begin a trip from {self.trip_starting_point} to {self.trip_destination}.")
         await Utils.progress_dots()
 
-        print(f"\nYou have arrived at {self.trip_destination}!")
+        print(f"You have arrived at {self.trip_destination}!")
 
         while True:
             print("""
@@ -156,21 +168,23 @@ class SmartBike:
                     int(input("How are your energy levels?: ")))
             except ValueError:
                 print(
-                    "\nPlease input the number that corresponds to the choice you'd like to select")
+                    "Please input the number that corresponds to the choice you'd like to select")
                 continue
             break
-        
+
         while True:
             try:
-                self.user_weight = float(input("What was your average speed in km/h?: "))
+                self.user_weight = float(
+                    input("What was your average speed in km/h?: "))
             except ValueError:
-                print("\nPlease use decimal format\ne.g., 69 or 42.0\n")
+                print("Please use decimal formate.g., 69 or 42.0")
                 continue
             break
 
 
 # Run the program (only when explicitly called)
 if __name__ == "__main__":
+    Utils.insert_new_line(2)
     bike = SmartBike()
     bike.set_device_up()
     asyncio.run(bike.trip())
